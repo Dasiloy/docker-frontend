@@ -18,12 +18,12 @@ jobs:
 
 
       - name: build docker image
-        run: docker build -t dasiloy/docker-frontend -f Dockerfile.test .
+        run: docker build -t dasiloy/docker-frontend:latest -f Dockerfile.test .
       
 
       - name: run tests
         env:
           CI: true
-        run: docker run  dasiloy/docker-frontend  npm run test  -- --run
+        run: docker run  dasiloy/docker-frontend 
 ... # end the yaml file
 
