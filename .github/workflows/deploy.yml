@@ -1,0 +1,29 @@
+--- # start the yaml file
+name: Deploy Frontend
+on:
+ push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: build frontend and test 
+    runs-on: ubuntu-latest
+    steps:
+      - name: initial setup
+        uses: actions/checkout@v2
+
+      - name: login docker
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+
+      - name: build docker image
+        run: docker build -t dasiloy/docker-frontend -f Dockerfile.test .
+      
+
+      - name: run tests
+        env:
+          CI: true
+        run: docker run  dasiloy/docker-frontend  npm run test
+... # end the yaml file
+
