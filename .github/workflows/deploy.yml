@@ -24,6 +24,6 @@ jobs:
       - name: run tests
         env:
           CI: true
-        run: docker run  dasiloy/docker-frontend  npm run test
+        run: docker run  dasiloy/docker-frontend  npm run test  -- --run
 ... # end the yaml file
 
