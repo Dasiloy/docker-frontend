@@ -1,29 +1,41 @@
---- # start the yaml file
 name: Deploy Frontend
 on:
- push:
+  push:
     branches:
       - main
 
 jobs:
   build:
-    name: build frontend and test 
+    name: Build frontend and test 
     runs-on: ubuntu-latest
     steps:
-      - name: initial setup
+      - name: Initial setup
         uses: actions/checkout@v2
 
-      - name: login docker
+      - name: Login Docker
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-
-      - name: build docker image
+      - name: Build Docker image
         run: docker build -t dasiloy/docker-frontend:latest -f Dockerfile.test .
-      
 
-      - name: run tests
+      - name: Run tests
         env:
           CI: true
-        run: docker run  dasiloy/docker-frontend 
-... # end the yaml file
+        run: docker run dasiloy/docker-frontend
+
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          application_name: Docker-Frontend
+          environment_name: Docker-Frontend-env
+          existing_bucket_name: elasticbeanstalk-us-east-1-977098995641
+          region: us-east-1
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+
 

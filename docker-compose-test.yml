@@ -1,0 +1,8 @@
+services:
+  webtest:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    volumes:
+    - /usr/app/node_modules
+    - .:/usr/app

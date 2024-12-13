@@ -1,19 +1,5 @@
 services:
-  web:
-    build: 
-      context: .
-      dockerfile: Dockerfile.dev
-    ports:
-    - "3000:3000"
-    volumes:
-    - /usr/app/node_modules
-    - .:/usr/app
-    command: ["npm","run","dev"]
-  webtest:
-    build:
-      context: .
-      dockerfile: Dockerfile.test
-    volumes:
-    - /usr/app/node_modules
-    - .:/usr/app
-  
+  website:
+   build: 
+    context: .
+    dockerfile: Dockerfile
