@@ -22,7 +22,7 @@ function App() {
           count is {count}
         </button>
         <p>
-          Edit your app <code>src/App.jsx</code> and save to test HMR
+          I can Edit your app <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
       <p className='read-the-docs'>Hello from docker volumes</p>
